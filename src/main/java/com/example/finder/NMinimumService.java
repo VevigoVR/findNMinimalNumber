@@ -1,6 +1,5 @@
 package com.example.finder;
 
-// NMinimumService.java
 import lombok.NoArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -58,27 +57,6 @@ public class NMinimumService {
         }
     }
 
-    /**
-     * Эффективный алгоритм поиска N-ного минимального числа
-     * Используем максимальную кучу для хранения N минимальных элементов
-     * Сложность: O(m log N), где m - количество чисел, N - параметр
-     */
-    private int findNthSmallest(int[] nums, int n) {
-        // Максимальная куча (обратный порядок)
-        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(n, Collections.reverseOrder());
-
-        for (int num : nums) {
-            if (maxHeap.size() < n) {
-                maxHeap.offer(num);
-            } else if (num < maxHeap.peek()) {
-                maxHeap.poll();
-                maxHeap.offer(num);
-            }
-        }
-
-        return maxHeap.peek();
-    }
-
     private int findNthSmallestFixed(int[] nums, int n) {
         if (n <= 0 || n > nums.length) {
             throw new IllegalArgumentException("Invalid n: " + n);
@@ -126,5 +104,26 @@ public class NMinimumService {
             }
         }
         return copy[n - 1]; // N-ный минимальный элемент
+    }
+
+    /**
+     * Эффективный алгоритм поиска N-ного минимального числа
+     * Используем максимальную кучу для хранения N минимальных элементов
+     * Сложность: O(m log N), где m - количество чисел, N - параметр
+     */
+    private int findNthSmallest(int[] nums, int n) {
+        // Максимальная куча (обратный порядок)
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(n, Collections.reverseOrder());
+
+        for (int num : nums) {
+            if (maxHeap.size() < n) {
+                maxHeap.offer(num);
+            } else if (num < maxHeap.peek()) {
+                maxHeap.poll();
+                maxHeap.offer(num);
+            }
+        }
+
+        return maxHeap.peek();
     }
 }
